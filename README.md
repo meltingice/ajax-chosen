@@ -12,7 +12,7 @@ The second argument is a callback that tells the plugin what HTML `option` eleme
 
 	terms[3] = "Ohio";
 	
-	becomes:
+becomes:
 	
 	<option value="3">Ohio</option>
 
