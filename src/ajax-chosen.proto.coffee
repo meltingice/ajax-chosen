@@ -1,11 +1,16 @@
 root = this
 
-class ajaxChosen
-  constructor: (select, options, callback) ->    
+class ajaxChosen extends Chosen
+  activate_field: ->
+    if @options.show_on_activate and not @active_field
+      this.results_show() 
+    super
+  
+  constructor: (select, @options, callback) ->
     # Load chosen. To make things clear, I have taken the liberty
     # of using the .chzn-autoselect class to specify input elements
     # we want to use with ajax autocomplete.
-    new Chosen(select)
+    super select, options
     
     # Now that chosen is loaded normally, we can bootstrap it with
     # our ajax autocomplete code.
@@ -33,7 +38,7 @@ class ajaxChosen
         # I'm assuming that it's ok to use the parameter name `term` to send
         # the form value during the ajax call. Change if absolutely needed.
         query_key = options.query_key || "term"
-        (options.parameters = {})[query_key] = val
+        (options.parameters ||= {})[query_key] = val
         
         # If the user provided an ajax success callback, store it so we can
         # call it after our bootstrapping is finished.
@@ -56,10 +61,13 @@ class ajaxChosen
           # Iterate through the given data and inject the <option> elements into
           # the DOM
           $H(items).each (pair) ->
-            select.insert
-              bottom:
-                new Element("option", {value: pair.key})
-                  .update(pair.value)
+            if select.value != pair.key
+              select.insert
+                bottom:
+                  new Element("option", {value: pair.key})
+                    .update(pair.value)
+              
+          val = field.value
               
           # Tell chosen that the contents of the <select> input have been updated
           # This makes chosen update its internal list of the input data.
