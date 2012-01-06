@@ -25,6 +25,10 @@
         # characters.
         return false if val.length < 3 or val is $(this).data('prevVal')
         
+        # We delay searches by a small amount so that we don't flood the
+        # server with ajax requests.
+        clearTimeout(@timer) if @timer
+        
         # Set the current search term so we don't execute the ajax call if
         # the user hits a key that isn't an input letter/number/symbol
         $(this).data('prevVal', val)
@@ -75,6 +79,8 @@
           # Finally, call the user supplied callback (if it exists)
           success() if success?
           
-        # Execute the ajax call to search for autocomplete data
-        $.ajax(options)
+        # Execute the ajax call to search for autocomplete data with a timer
+        @timer = setTimeout -> 
+          $.ajax(options)
+        , 800
 )(jQuery)
