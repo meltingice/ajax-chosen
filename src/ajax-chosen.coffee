@@ -83,4 +83,29 @@
         @timer = setTimeout -> 
           $.ajax(options)
         , 800
+
+    # (JPascal) This code assign ajax for select tag without multiple option
+    this.next('.chzn-container')
+      .find(".chzn-search > input")
+      .bind 'keyup', ->
+        val = $.trim $(this).attr('value')
+        return false if val.length < 3 or val is $(this).data('prevVal')
+        field = $(this)
+        options.data = term: val
+        success ?= options.success
+        options.success = (data) ->
+          return if not data?
+          select.find('option').each -> $(this).remove()
+          items = callback data
+          $.each items, (value, text) ->
+            $("<option />")
+              .attr('value', value)
+              .html(text)
+              .appendTo(select)
+          select.trigger("liszt:updated")
+          field.attr('value', val)
+          success() if success?
+        @timer = setTimeout -> 
+          $.ajax(options)
+        , 800        
 )(jQuery)
