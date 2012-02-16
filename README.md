@@ -22,7 +22,7 @@ becomes:
 $("#example-input").ajaxChosen({
 	method: 'GET',
 	url: '/ajax-chosen/data.php',
-  data: { user_id: 23 },
+	data: { user_id: 23 },
 	dataType: 'json'
 }, function (data) {
 	var terms = {};
