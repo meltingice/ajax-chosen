@@ -38,7 +38,8 @@
         
         # I'm assuming that it's ok to use the parameter name `term` to send
         # the form value during the ajax call. Change if absolutely needed.
-        options.data = term: val
+        options.data = options.data || {}
+        options.data.term = val
         
         # If the user provided an ajax success callback, store it so we can
         # call it after our bootstrapping is finished.
@@ -91,7 +92,8 @@
         val = $.trim $(this).attr('value')
         return false if val.length < 3 or val is $(this).data('prevVal')
         field = $(this)
-        options.data = term: val
+        options.data = options.data || {}
+        options.data.term = val
         success ?= options.success
         options.success = (data) ->
           return if not data?
