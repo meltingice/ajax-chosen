@@ -18,7 +18,7 @@
     # our ajax autocomplete code.
     this.next('.chzn-container')
       .find(".search-field > input")
-      .bind 'keyup', ->
+      .bind 'keyup', (e) ->
         # This code will be executed every time the user types a letter
         # into the input form that chosen has created
         
@@ -27,8 +27,10 @@
         
         # Some simple validation so we don't make excess ajax calls. I am
         # assuming you don't want to perform a search with less than 3
-        # characters.
-        return false if val.length < minTermLength or val is $(this).data('prevVal')
+        # characters.  Also don't make ajax call for control characters (cmd, shift)
+        return false if val.length < minTermLength or 
+          val is $(this).data('prevVal') or 
+          [16,91,93].indexOf(e.keyCode) > -1
         
         # We delay searches by a small amount so that we don't flood the
         # server with ajax requests.
@@ -104,9 +106,11 @@
     # (JPascal) This code assign ajax for select tag without multiple option
     this.next('.chzn-container')
       .find(".chzn-search > input")
-      .bind 'keyup', ->
+      .bind 'keyup', (e) ->
         val = $.trim $(this).attr('value')
-        return false if val.length < minTermLength or val is $(this).data('prevVal')
+        return false if val.length < minTermLength or 
+          val is $(this).data('prevVal') or
+          [16,91,93].indexOf(e.keyCode) > -1
         field = $(this)
         options.data = term: val
         success ?= options.success
