@@ -58,20 +58,27 @@
           return if not data?
           
           # Go through all of the <option> elements in the <select> and remove
-          # ones that have not been selected by the user.
-          select.find('option').each -> $(this).remove() if not $(this).is(":selected")
-          
+          # ones that have not been selected by the user.  For those selected
+          # by the user, add them to a list to filter from the results later.
+          selected_values = []
+          select.find('option').each -> 
+            if not $(this).is(":selected")
+              $(this).remove() 
+            else
+              selected_values.push $(this).val() + "-" + $(this).text()
+              
           # Send the ajax results to the user callback so we can get an object of
           # value => text pairs to inject as <option> elements.
           items = callback data
           
           # Iterate through the given data and inject the <option> elements into
-          # the DOM
+          # the DOM if it doesn't exist in the selector already
           $.each items, (value, text) ->
-            $("<option />")
-              .attr('value', value)
-              .html(text)
-              .appendTo(select)
+            if selected_values.indexOf(value + "-" + text) == -1
+              $("<option />")
+                .attr('value', value)
+                .html(text)
+                .appendTo(select)
               
           # Tell chosen that the contents of the <select> input have been updated
           # This makes chosen update its internal list of the input data.
