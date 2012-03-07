@@ -4,6 +4,12 @@
     # This will come in handy later.
     select = this
     
+    
+    # Set default option parameters
+    minTermLength = options.minTermLength || 3      # Minimum term length to send ajax request.
+    afterTypeDelay = options.afterTypeDelay || 800  # Delay after typing to send ajax request.
+    jsonTermKey = options.jsonTermKey || "term"     # The term key name for the json service
+
     # Load chosen. To make things clear, I have taken the liberty
     # of using the .chzn-autoselect class to specify input elements
     # we want to use with ajax autocomplete.
@@ -23,7 +29,7 @@
         # Some simple validation so we don't make excess ajax calls. I am
         # assuming you don't want to perform a search with less than 3
         # characters.
-        return false if val.length < 3 or val is $(this).data('prevVal')
+        return false if val.length < minTermLength or val is $(this).data('prevVal')
         
         # We delay searches by a small amount so that we don't flood the
         # server with ajax requests.
@@ -36,9 +42,9 @@
         # This is a useful reference for later
         field = $(this)
         
-        # I'm assuming that it's ok to use the parameter name `term` to send
-        # the form value during the ajax call. Change if absolutely needed.
-        options.data = term: val
+        # Default term key is `term`.  Specify alternative in options.jsonTermKey
+        options.data = {}
+        options.data[jsonTermKey] = val
         
         # If the user provided an ajax success callback, store it so we can
         # call it after our bootstrapping is finished.
@@ -82,16 +88,17 @@
         # Execute the ajax call to search for autocomplete data with a timer
         @timer = setTimeout -> 
           $.ajax(options)
-        , 800
+        , afterTypeDelay
 
     # (JPascal) This code assign ajax for select tag without multiple option
     this.next('.chzn-container')
       .find(".chzn-search > input")
       .bind 'keyup', ->
         val = $.trim $(this).attr('value')
-        return false if val.length < 3 or val is $(this).data('prevVal')
+        return false if val.length < minTermLength or val is $(this).data('prevVal')
         field = $(this)
-        options.data = term: val
+        options.data = {}
+        options.data[jsonTermKey] = val
         success ?= options.success
         options.success = (data) ->
           return if not data?
@@ -107,5 +114,5 @@
           success() if success?
         @timer = setTimeout -> 
           $.ajax(options)
-        , 800        
+        , afterTypeDelay
 )(jQuery)
