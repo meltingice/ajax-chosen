@@ -19,6 +19,9 @@
         
         # Retrieve the current value of the input form
         val = $.trim $(this).attr('value')
+
+        msg = if val.length < minTermLength then "Keep typing..." else "Looking for '" + val + "'"
+        select.next('.chzn-container').find('.no-results').text(msg)
         
         # Some simple validation so we don't make excess ajax calls. I am
         # assuming you don't want to perform a search with less than 3
