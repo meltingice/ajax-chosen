@@ -19,6 +19,9 @@
         
         # Retrieve the current value of the input form
         val = $.trim $(this).attr('value')
+
+        msg = if val.length < minTermLength then "Keep typing..." else "Looking for '" + val + "'"
+        select.next('.chzn-container').find('.no-results').text(msg)
         
         # Some simple validation so we don't make excess ajax calls. I am
         # assuming you don't want to perform a search with less than 3
@@ -28,9 +31,6 @@
         # We delay searches by a small amount so that we don't flood the
         # server with ajax requests.
         clearTimeout(@timer) if @timer
-
-        # Modify no results message to be more meaningful
-        select.next('.chzn-container').find('.no-results').text("Looking for '" + val + "'")
         
         # Set the current search term so we don't execute the ajax call if
         # the user hits a key that isn't an input letter/number/symbol
