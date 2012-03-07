@@ -4,6 +4,11 @@
     # This will come in handy later.
     select = this
     
+    
+    # Set default option parameters
+    minTermLength = options.minTermLength || 3  # Minimum term length to send ajax request.
+    afterTypeDelay = options.afterTypeDelay || 800       # Delay after typing to send ajax request.
+
     # Load chosen. To make things clear, I have taken the liberty
     # of using the .chzn-autoselect class to specify input elements
     # we want to use with ajax autocomplete.
@@ -23,7 +28,7 @@
         # Some simple validation so we don't make excess ajax calls. I am
         # assuming you don't want to perform a search with less than 3
         # characters.
-        return false if val.length < 3 or val is $(this).data('prevVal')
+        return false if val.length < minTermLength or val is $(this).data('prevVal')
         
         # We delay searches by a small amount so that we don't flood the
         # server with ajax requests.
@@ -82,14 +87,14 @@
         # Execute the ajax call to search for autocomplete data with a timer
         @timer = setTimeout -> 
           $.ajax(options)
-        , 800
+        , afterTypeDelay
 
     # (JPascal) This code assign ajax for select tag without multiple option
     this.next('.chzn-container')
       .find(".chzn-search > input")
       .bind 'keyup', ->
         val = $.trim $(this).attr('value')
-        return false if val.length < 3 or val is $(this).data('prevVal')
+        return false if val.length < minTermLength or val is $(this).data('prevVal')
         field = $(this)
         options.data = term: val
         success ?= options.success
@@ -107,5 +112,5 @@
           success() if success?
         @timer = setTimeout -> 
           $.ajax(options)
-        , 800        
+        , afterTypeDelay
 )(jQuery)
