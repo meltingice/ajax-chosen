@@ -35,6 +35,9 @@
         # We delay searches by a small amount so that we don't flood the
         # server with ajax requests.
         clearTimeout(@timer) if @timer
+
+        # Modify no results message to be more meaningful
+        select.next('.chzn-container').find('.no-results').text("Looking for '" + val + "'")
         
         # Set the current search term so we don't execute the ajax call if
         # the user hits a key that isn't an input letter/number/symbol
