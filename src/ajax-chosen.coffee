@@ -6,8 +6,9 @@
     
     
     # Set default option parameters
-    minTermLength = options.minTermLength || 3  # Minimum term length to send ajax request.
-    afterTypeDelay = options.afterTypeDelay || 800       # Delay after typing to send ajax request.
+    minTermLength = options.minTermLength || 3      # Minimum term length to send ajax request.
+    afterTypeDelay = options.afterTypeDelay || 800  # Delay after typing to send ajax request.
+    jsonTermKey = options.jsonTermKey || "term"     # The term key name for the json service
 
     # Load chosen. To make things clear, I have taken the liberty
     # of using the .chzn-autoselect class to specify input elements
@@ -41,9 +42,9 @@
         # This is a useful reference for later
         field = $(this)
         
-        # I'm assuming that it's ok to use the parameter name `term` to send
-        # the form value during the ajax call. Change if absolutely needed.
-        options.data = term: val
+        # Default term key is `term`.  Specify alternative in options.jsonTermKey
+        options.data = {}
+        options.data[jsonTermKey] = val
         
         # If the user provided an ajax success callback, store it so we can
         # call it after our bootstrapping is finished.
@@ -96,7 +97,8 @@
         val = $.trim $(this).attr('value')
         return false if val.length < minTermLength or val is $(this).data('prevVal')
         field = $(this)
-        options.data = term: val
+        options.data = {}
+        options.data[jsonTermKey] = val
         success ?= options.success
         options.success = (data) ->
           return if not data?
