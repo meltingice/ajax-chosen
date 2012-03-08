@@ -91,7 +91,19 @@ do ($ = jQuery) ->
           # searches impossible), so we add the value the user was typing back into
           # the input field.
           field.attr('value', val)
-          
+
+          # Because non-ajax Chosen isn't constantly re-building results, when it
+          # DOES rebuild results (during liszt:updated above, it clears the input 
+          # search field before scaling it.  This causes the input field width to be 
+          # at it's minimum, which is about 25px.  
+
+          # The proper way to fix this would be create a new method in chosen for
+          # rebuilding results without clearing the input field.  Or to call 
+          # Chosen.search_field_scale() after resetting the value above.  This isn't
+          # possible with the current state of Chosen.  The quick fix is to simply reset
+          # the width of the field after we reset the value of the input text.
+          field.css('width','auto')
+                    
         # Execute the ajax call to search for autocomplete data with a timer
         @timer = setTimeout -> 
           chosenXhr.abort() if chosenXhr
