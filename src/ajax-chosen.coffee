@@ -25,6 +25,9 @@ do ($ = jQuery) ->
         
         # Retrieve the current value of the input form
         val = $.trim $(@).attr('value')
+
+        msg = if val.length < minTermLength then "Keep typing..." else "Looking for '" + val + "'"
+        select.next('.chzn-container').find('.no-results').text(msg)
         
         # Some simple validation so we don't make excess ajax calls. I am
         # assuming you don't want to perform a search with less than 3
@@ -76,21 +79,21 @@ do ($ = jQuery) ->
           # This makes chosen update its internal list of the input data.
           select.trigger("liszt:updated")
           
+          # Finally, call the user supplied callback (if it exists)
+          success() if success?
+
           # For some reason, the contents of the input field get removed once you
           # call trigger above. Often, this can be very annoying (and can make some
           # searches impossible), so we add the value the user was typing back into
           # the input field.
           field.attr('value', val)
           
-          # Finally, call the user supplied callback (if it exists)
-          success() if success?
-          
         # Execute the ajax call to search for autocomplete data with a timer
         @timer = setTimeout -> 
           $.ajax(options)
         , afterTypeDelay
 
-    # This code assign ajax for select tag without multiple option
+    # This code assigns ajax for select tag without multiple option
     @next('.chzn-container')
       .find(".chzn-search > input")
       .bind 'keyup', ->
