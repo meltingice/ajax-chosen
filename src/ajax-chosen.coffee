@@ -23,7 +23,7 @@ do ($ = jQuery) ->
     # our ajax autocomplete code.
     @next('.chzn-container')
       .find(".search-field > input")
-      .bind 'keyup', ->
+      .bind 'keyup', (e)->
         # This code will be executed every time the user types a letter
         # into the input form that chosen has created
         
@@ -35,8 +35,10 @@ do ($ = jQuery) ->
         
         # Some simple validation so we don't make excess ajax calls. I am
         # assuming you don't want to perform a search with less than 3
-        # characters.
-        return false if val.length < options.minTermLength or val is $(@).data('prevVal')
+        # characters.  Also, don't make ajax call for control characters (cmd, shift)
+        return false if val.length < options.minTermLength or 
+          val is $(@).data('prevVal') or 
+          [16,91,93].indexOf(e.keyCode) > -1
         
         # We delay searches by a small amount so that we don't flood the
         # server with ajax requests.
@@ -101,9 +103,11 @@ do ($ = jQuery) ->
     # This code assigns ajax for select tag without multiple option
     @next('.chzn-container')
       .find(".chzn-search > input")
-      .bind 'keyup', ->
+      .bind 'keyup',(e)->
         val = $.trim $(@).attr('value')
-        return false if val.length < options.minTermLength or val is $(@).data('prevVal')
+        return false if val.length < options.minTermLength or 
+          val is $(@).data('prevVal') or
+          [16,91,93].indexOf(e.keyCode) > -1
 
         field = $(@)
         options.data = {}
