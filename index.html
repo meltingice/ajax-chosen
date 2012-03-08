@@ -10,12 +10,12 @@
 	<link type="text/css" rel="stylesheet" href="/ajax-chosen/dist/chosen/chosen/chosen.css" />
 	
 	<style type="text/css">
-	#example1 { width: 300px; }
+	#example1, #example2 { width: 300px; display: block; }
 	</style>
 	
 	<script type="text/javascript">
 	$(document).ready(function () {
-		$("#example1").ajaxChosen({
+		$("#example1,#example2").ajaxChosen({
 			method: 'GET',
 			url: '/ajax-chosen/data.php',
 			dataType: 'json'
@@ -34,6 +34,13 @@
 <body>
 	<h1>Ajax-Chosen: Bootstrapping a jQuery Plugin</h1>
 	
-	<select id="example1" title="Search for a state" multiple></select>
+	<div>
+		<h2>Multi Select</h2>
+		<select id="example1" title="Search for a state" multiple></select>
+	</div>
+	<div>
+		<h2>Single Select</h2>
+		<select id="example2" title="Select for a state" search><option></option></select>
+	</div>
 </body>
 </html>

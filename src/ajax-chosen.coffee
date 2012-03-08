@@ -22,7 +22,7 @@ do ($ = jQuery) ->
     # Now that chosen is loaded normally, we can bootstrap it with
     # our ajax autocomplete code.
     @next('.chzn-container')
-      .find(".search-field > input")
+      .find(".search-field > input, .chzn-search > input")
       .bind 'keyup', ->
         # This code will be executed every time the user types a letter
         # into the input form that chosen has created
@@ -93,36 +93,6 @@ do ($ = jQuery) ->
           field.attr('value', val)
           
         # Execute the ajax call to search for autocomplete data with a timer
-        @timer = setTimeout -> 
-          chosenXhr.abort() if chosenXhr
-          chosenXhr = $.ajax(options)
-        , options.afterTypeDelay
-
-    # This code assigns ajax for select tag without multiple option
-    @next('.chzn-container')
-      .find(".chzn-search > input")
-      .bind 'keyup', ->
-        val = $.trim $(@).attr('value')
-        return false if val.length < options.minTermLength or val is $(@).data('prevVal')
-
-        field = $(@)
-        options.data = {}
-        options.data[options.jsonTermKey] = val
-        success ?= options.success
-
-        options.success = (data) ->
-          return if not data?
-          select.find('option').each -> $(@).remove()
-          items = callback data
-          $.each items, (value, text) ->
-            $("<option />")
-              .attr('value', value)
-              .html(text)
-              .appendTo(select)
-          select.trigger("liszt:updated")
-          field.attr('value', val)
-          success() if success?
-
         @timer = setTimeout -> 
           chosenXhr.abort() if chosenXhr
           chosenXhr = $.ajax(options)
