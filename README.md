@@ -16,6 +16,14 @@ becomes:
 	
 	<option value="3">Ohio</option>
 
+### Options
+
+There are some additional ajax-chosen specific options you can pass into the first argument to control it's behavior.
+
+* minTermLength: minimum number of characters that must be typed before an ajax call is fired
+* afterTypeDelay: how many milliseconds to wait after typing stops to fire the ajax call
+* jsonTermKey: the ajax request key to use for the search query (defaults to `term`)
+
 ## Example Code
 
 ``` js

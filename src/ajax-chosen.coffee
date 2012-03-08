@@ -1,15 +1,18 @@
 do ($ = jQuery) ->
 
-  $.fn.ajaxChosen = (options, callback) ->
+  $.fn.ajaxChosen = (settings = {}, callback = ->) ->
+    defaultOptions =
+      minTermLength: 3
+      afterTypeDelay: 500
+      jsonTermKey: "term"
+
     # This will come in handy later.
     select = @
     
     chosenXhr = null
     
-    # Set default option parameters
-    minTermLength = options.minTermLength or 3      # Minimum term length to send ajax request.
-    afterTypeDelay = options.afterTypeDelay or 500  # Delay after typing to send ajax request.
-    jsonTermKey = options.jsonTermKey or "term"     # The term key name for the json service
+    # Merge options with defaults
+    options = $.extend {}, defaultOptions, settings
 
     # Load chosen. To make things clear, I have taken the liberty
     # of using the .chzn-autoselect class to specify input elements
@@ -27,13 +30,13 @@ do ($ = jQuery) ->
         # Retrieve the current value of the input form
         val = $.trim $(@).attr('value')
 
-        msg = if val.length < minTermLength then "Keep typing..." else "Looking for '" + val + "'"
+        msg = if val.length < options.minTermLength then "Keep typing..." else "Looking for '" + val + "'"
         select.next('.chzn-container').find('.no-results').text(msg)
         
         # Some simple validation so we don't make excess ajax calls. I am
         # assuming you don't want to perform a search with less than 3
         # characters.
-        return false if val.length < minTermLength or val is $(@).data('prevVal')
+        return false if val.length < options.minTermLength or val is $(@).data('prevVal')
         
         # We delay searches by a small amount so that we don't flood the
         # server with ajax requests.
@@ -46,9 +49,9 @@ do ($ = jQuery) ->
         # This is a useful reference for later
         field = $(@)
         
-        # Default term key is `term`.  Specify alternative in options.jsonTermKey
+        # Default term key is `term`.  Specify alternative in options.options.jsonTermKey
         options.data = {} if not options.data?
-        options.data[jsonTermKey] = val
+        options.data[options.jsonTermKey] = val
         
         # If the user provided an ajax success callback, store it so we can
         # call it after our bootstrapping is finished.
@@ -93,18 +96,18 @@ do ($ = jQuery) ->
         @timer = setTimeout -> 
           chosenXhr.abort() if chosenXhr
           chosenXhr = $.ajax(options)
-        , afterTypeDelay
+        , options.afterTypeDelay
 
     # This code assigns ajax for select tag without multiple option
     @next('.chzn-container')
       .find(".chzn-search > input")
       .bind 'keyup', ->
         val = $.trim $(@).attr('value')
-        return false if val.length < minTermLength or val is $(@).data('prevVal')
+        return false if val.length < options.minTermLength or val is $(@).data('prevVal')
 
         field = $(@)
         options.data = {}
-        options.data[jsonTermKey] = val
+        options.data[options.jsonTermKey] = val
         success ?= options.success
 
         options.success = (data) ->
@@ -123,4 +126,4 @@ do ($ = jQuery) ->
         @timer = setTimeout -> 
           chosenXhr.abort() if chosenXhr
           chosenXhr = $.ajax(options)
-        , afterTypeDelay
+        , options.afterTypeDelay
