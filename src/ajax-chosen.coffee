@@ -4,6 +4,7 @@ do ($ = jQuery) ->
     # This will come in handy later.
     select = @
     
+    chosenXhr = null
     
     # Set default option parameters
     minTermLength = options.minTermLength or 3      # Minimum term length to send ajax request.
@@ -46,7 +47,7 @@ do ($ = jQuery) ->
         field = $(@)
         
         # Default term key is `term`.  Specify alternative in options.jsonTermKey
-        options.data = {}
+        options.data = {} if not options.data?
         options.data[jsonTermKey] = val
         
         # If the user provided an ajax success callback, store it so we can
@@ -90,7 +91,8 @@ do ($ = jQuery) ->
           
         # Execute the ajax call to search for autocomplete data with a timer
         @timer = setTimeout -> 
-          $.ajax(options)
+          chosenXhr.abort() if chosenXhr
+          chosenXhr = $.ajax(options)
         , afterTypeDelay
 
     # This code assigns ajax for select tag without multiple option
@@ -117,6 +119,8 @@ do ($ = jQuery) ->
           select.trigger("liszt:updated")
           field.attr('value', val)
           success() if success?
+
         @timer = setTimeout -> 
-          $.ajax(options)
+          chosenXhr.abort() if chosenXhr
+          chosenXhr = $.ajax(options)
         , afterTypeDelay
