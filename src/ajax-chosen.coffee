@@ -30,21 +30,29 @@ do ($ = jQuery) ->
         # Retrieve the current value of the input form
         val = $.trim $(@).attr('value')
 
+        # Depending on how much text the user has typed, let them know
+        # if they need to keep typing or if we are looking for their data
         msg = if val.length < options.minTermLength then "Keep typing..." else "Looking for '" + val + "'"
         select.next('.chzn-container').find('.no-results').text(msg)
         
-        # Some simple validation so we don't make excess ajax calls. I am
-        # assuming you don't want to perform a search with less than 3
-        # characters.
-        return false if val.length < options.minTermLength or val is $(@).data('prevVal')
+        # If input text has not changed ... do nothing
+        return false if val is $(@).data('prevVal')
+
+        # Set the current search term so we don't execute the ajax call if
+        # the user hits a key that isn't an input letter/number/symbol
+        $(@).data('prevVal', val)
         
+        # At this point, we have a new term/query ... the old timer
+        # is no longer valid.  Clear it.
+
         # We delay searches by a small amount so that we don't flood the
         # server with ajax requests.
         clearTimeout(@timer) if @timer
         
-        # Set the current search term so we don't execute the ajax call if
-        # the user hits a key that isn't an input letter/number/symbol
-        $(@).data('prevVal', val)
+        # Some simple validation so we don't make excess ajax calls. I am
+        # assuming you don't want to perform a search with less than 3
+        # characters.
+        return false if val.length < options.minTermLength
         
         # This is a useful reference for later
         field = $(@)
