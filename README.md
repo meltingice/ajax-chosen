@@ -41,3 +41,7 @@ $("#example-input").ajaxChosen({
 	return terms;
 });
 ```
+
+## Developing ajax-chosen
+
+ajax-chosen is written in Coffeescript, so there is a Cakefile provided that will perform all necessary tasks for you. Simply run `cake` to see all available commands.
