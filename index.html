@@ -10,12 +10,12 @@
 	<link type="text/css" rel="stylesheet" href="/ajax-chosen/dist/chosen/chosen/chosen.css" />
 	
 	<style type="text/css">
-	#example1, #example2 { width: 300px; display: block; }
+	#example1, #example2, #example3 { width: 300px; display: block; }
 	</style>
 	
 	<script type="text/javascript">
 	$(document).ready(function () {
-		$("#example1,#example2").ajaxChosen({
+		$("#example1,#example2,#example3").ajaxChosen({
 			method: 'GET',
 			url: '/ajax-chosen/data.php',
 			dataType: 'json'
@@ -36,7 +36,8 @@
 	
 	<div>
 		<h2>Multi Select</h2>
-		<select id="example1" title="Search for a state" multiple></select>
+		<select id="example1" title="Search for a state" multiple></select><br /><br />
+		<select id="example3" title="Search for a state" multiple></select>
 	</div>
 	<div>
 		<h2>Single Select</h2>
