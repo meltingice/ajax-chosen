@@ -89,7 +89,7 @@ do ($ = jQuery) ->
             # Iterate through the given data and inject the <option> elements into
             # the DOM if it doesn't exist in the selector already
             $.each items, (value, text) ->
-              if selected_values.indexOf(value + "-" + text) == -1
+              if $.inArray(value + "-" + text, selected_values) == -1
                 $("<option />")
                   .attr('value', value)
                   .html(text)
