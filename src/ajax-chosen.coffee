@@ -64,7 +64,7 @@ do ($ = jQuery) ->
           
           # If the user provided an ajax success callback, store it so we can
           # call it after our bootstrapping is finished.
-          success ?= options.success
+          success = options.success
           
           # Create our own callback that will be executed when the ajax call is
           # finished.
