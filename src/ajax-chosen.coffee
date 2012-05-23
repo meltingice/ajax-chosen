@@ -1,6 +1,6 @@
 do ($ = jQuery) ->
 
-  $.fn.ajaxChosen = (settings = {}, callback = ->) ->
+  $.fn.ajaxChosen = (settings = {}, callback = {}, chosenOptions = ->) ->
     defaultOptions =
       minTermLength: 3
       afterTypeDelay: 500
@@ -17,7 +17,7 @@ do ($ = jQuery) ->
     # Load chosen. To make things clear, I have taken the liberty
     # of using the .chzn-autoselect class to specify input elements
     # we want to use with ajax autocomplete.
-    @chosen()
+    @chosen(if chosenOptions then chosenOptions else {})
     
     @each ->
       # Now that chosen is loaded normally, we can bootstrap it with
