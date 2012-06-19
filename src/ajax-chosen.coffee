@@ -61,6 +61,7 @@ do ($ = jQuery) ->
           # Default term key is `term`.  Specify alternative in options.options.jsonTermKey
           options.data = {} if not options.data?
           options.data[options.jsonTermKey] = val
+          options.data = options.dataCallback(options.data) if options.dataCallback? 
           
           # If the user provided an ajax success callback, store it so we can
           # call it after our bootstrapping is finished.
