@@ -29,6 +29,7 @@ do ($ = jQuery) ->
           # into the input form that chosen has created
           
           # Retrieve the current value of the input form
+          untrimmed_val = $(@).attr('value')
           val = $.trim $(@).attr('value')
 
           # Depending on how much text the user has typed, let them know
@@ -107,7 +108,7 @@ do ($ = jQuery) ->
             # call trigger above. Often, this can be very annoying (and can make some
             # searches impossible), so we add the value the user was typing back into
             # the input field.
-            field.attr('value', val)
+            field.attr('value', untrimmed_val)
 
             # Because non-ajax Chosen isn't constantly re-building results, when it
             # DOES rebuild results (during liszt:updated above, it clears the input 
