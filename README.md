@@ -28,7 +28,7 @@ There are some additional ajax-chosen specific options you can pass into the fir
 
 ``` js
 $("#example-input").ajaxChosen({
-	method: 'GET',
+	type: 'GET',
 	url: '/ajax-chosen/data.php',
 	dataType: 'json'
 }, function (data) {
