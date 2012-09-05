@@ -77,17 +77,23 @@ To use optgroup tag result 'terms' item should be changed to return list of grou
 ``` js
 $("#example-input").ajaxChosen({
 	type: 'GET',
-	url: '/ajax-chosen/data.php',
+	url: '/ajax-chosen/grouped.php',
 	dataType: 'json'
 }, function (data) {
 	var terms = {};
-			
 	$.each(data, function (i, val) {
-		terms[i] = val;
+		terms[i] = {
+			group: true,
+			text: val.name,
+			items: {}
+		};
+		$.each(val.Values, function (i1, val1) {
+			terms[i].items[val1.Id] = val1.name;
+		});
 	});
-			
 	return terms;
 });
+
 ```
 
 ## Developing ajax-chosen
