@@ -77,6 +77,9 @@ do ($ = jQuery) ->
             # ones that have not been selected by the user.  For those selected
             # by the user, add them to a list to filter from the results later.
             selected_values = []
+            select.find('optgroup').each -> 
+                $(@).remove() 
+
             select.find('option').each -> 
               if not $(@).is(":selected")
                 $(@).remove() 
@@ -89,11 +92,21 @@ do ($ = jQuery) ->
             
             # Iterate through the given data and inject the <option> elements into
             # the DOM if it doesn't exist in the selector already
-            $.each items, (value, text) ->
-              if $.inArray(value + "-" + text, selected_values) == -1
+            $.each items, (value, element) ->
+              if element.group
+                group = $("<optgroup />")
+                  .attr('label', element.text)
+                  .appendTo(select)
+                $.each element.items, (value, text) ->
+                  if $.inArray(value + "-" + text, selected_values) == -1
+                    $("<option />")
+                      .attr('value', value)
+                      .html(text)
+                      .appendTo(group)
+              else if $.inArray(value + "-" + element, selected_values) == -1
                 $("<option />")
                   .attr('value', value)
-                  .html(text)
+                  .html(element)
                   .appendTo(select)
                 
             # Tell chosen that the contents of the <select> input have been updated
@@ -119,7 +132,7 @@ do ($ = jQuery) ->
             # Chosen.search_field_scale() after resetting the value above.  This isn't
             # possible with the current state of Chosen.  The quick fix is to simply reset
             # the width of the field after we reset the value of the input text.
-            field.css('width','auto')
+            # field.css('width','auto')
                       
           # Execute the ajax call to search for autocomplete data with a timer
           @timer = setTimeout -> 
