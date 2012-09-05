@@ -89,11 +89,21 @@ do ($ = jQuery) ->
             
             # Iterate through the given data and inject the <option> elements into
             # the DOM if it doesn't exist in the selector already
-            $.each items, (value, text) ->
-              if $.inArray(value + "-" + text, selected_values) == -1
+            $.each items, (value, element) ->
+              if element.group
+                group = $("<optgroup />")
+                  .attr('label', element.text)
+                  .appendTo(select)
+                $.each element.items, (value, text) ->
+                  if $.inArray(value + "-" + text, selected_values) == -1
+                    $("<option />")
+                      .attr('value', value)
+                      .html(text)
+                      .appendTo(group)
+              else if $.inArray(value + "-" + element, selected_values) == -1
                 $("<option />")
                   .attr('value', value)
-                  .html(text)
+                  .html(element)
                   .appendTo(select)
                 
             # Tell chosen that the contents of the <select> input have been updated
