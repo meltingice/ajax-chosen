@@ -16,6 +16,31 @@ becomes:
 	
 	<option value="3">Ohio</option>
 
+or for grouping:
+
+	terms[3] = {
+	  group : "true",
+	  text : "City",
+	  items : {}
+        }
+        terms[3].items[10] = 'Stockholm'
+        terms[3].items[23] = 'Moskow'
+          
+becomes:
+
+        <optgroup label="City">
+            <option value='10'>Stockholm</option>
+            <option value='23'>Moskow</option>
+        </optgroup>
+
+Note: 
+In case of a bug in chosen, it is necessary to change choosen.css.
+Add 
+	display: list-item;
+to 
+	.chzn-container .chzn-results .group-result {
+class
+
 ### Options
 
 There are some additional ajax-chosen specific options you can pass into the first argument to control it's behavior.
@@ -25,6 +50,23 @@ There are some additional ajax-chosen specific options you can pass into the fir
 * jsonTermKey: the ajax request key to use for the search query (defaults to `term`)
 
 ## Example Code
+
+``` js
+$("#example-input").ajaxChosen({
+	type: 'GET',
+	url: '/ajax-chosen/data.php',
+	dataType: 'json'
+}, function (data) {
+	var terms = {};
+			
+	$.each(data, function (i, val) {
+		terms[i] = val;
+	});
+			
+	return terms;
+});
+```
+To use optgroup tag result 'terms' item should be changed to return list of group objects:
 
 ``` js
 $("#example-input").ajaxChosen({
