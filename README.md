@@ -34,11 +34,17 @@ becomes:
         </optgroup>
 
 Note: 
+
 In case of a bug in chosen, it is necessary to change choosen.css.
+
 Add 
+
 	display: list-item;
+
 to 
+
 	.chzn-container .chzn-results .group-result {
+
 class
 
 ### Options
