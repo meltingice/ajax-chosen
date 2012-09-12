@@ -30,8 +30,8 @@ or for grouping:
 becomes:
 
         <optgroup label="City">
-            <option value='10'>Stockholm</option>
-            <option value='23'>Moskow</option>
+            <option value="10">Stockholm</option>
+            <option value="23">Moskow</option>
         </optgroup>
 
 Note: 
