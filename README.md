@@ -63,13 +63,13 @@ $("#example-input").ajaxChosen({
 	url: '/ajax-chosen/data.php',
 	dataType: 'json'
 }, function (data) {
-	var terms = {};
-			
+	var results = {};
+	
 	$.each(data, function (i, val) {
-		terms[i] = val;
+		results[i] = val;
 	});
-			
-	return terms;
+	
+	return results;
 });
 ```
 To have the results grouped in `optgroup` elements, have the function return a list of group objects instead:
@@ -80,18 +80,18 @@ $("#example-input").ajaxChosen({
 	url: '/ajax-chosen/grouped.php',
 	dataType: 'json'
 }, function (data) {
-	var terms = {};
+	var results = {};
 	$.each(data, function (i, val) {
-		terms[i] = {
+		results[i] = { // here's a group object:
 			group: true,
-			text: val.name,
-			items: {}
+			text: val.name, // label for the group
+			items: {} // individual options within the group
 		};
 		$.each(val.Values, function (i1, val1) {
-			terms[i].items[val1.Id] = val1.name;
+			results[i].items[val1.Id] = val1.name;
 		});
 	});
-	return terms;
+	return results;
 });
 
 ```
