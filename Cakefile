@@ -15,7 +15,7 @@ targetCoffee  = "#{csSrcDir}/build.coffee"
 targetJS      = "#{csTargetDir}/#{targetName}.js"
 targetMinJS   = "#{csTargetDir}/#{targetName}.min.js"
 
-coffeeOpts    = "-b -r coffeescript-growl -j #{targetName}.js -o #{csTargetDir} -c #{targetCoffee}"
+coffeeOpts    = "-b -j #{targetName}.js -o #{csTargetDir} -c #{targetCoffee}"
 
 coffeeFiles   = [
   "ajax-chosen"

@@ -99,4 +99,10 @@ $("#example-input").ajaxChosen({
 
 ## Developing ajax-chosen
 
+In order to install development dependencies, you can run in the ajax-chosen directory:
+
+```
+npm install -d
+```
+
 ajax-chosen is written in Coffeescript, so there is a Cakefile provided that will perform all necessary tasks for you. Simply run `cake` to see all available commands.

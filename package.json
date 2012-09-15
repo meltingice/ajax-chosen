@@ -1,0 +1,14 @@
+{
+  "name": "ajax-chosen",
+  "description": "A complement to the jQuery library Chosen that adds ajax autocomplete",
+  "version": "0.2.0",
+  "author": {
+    "name": "Ryan LeFevre",
+    "email": "meltingice8917@gmail.com",
+    "url": "http://meltingice.net"
+  },
+  "devDependencies": {
+    "coffee-script": ">= 1.3.1",
+    "jsmin": "*"
+  }
+}
