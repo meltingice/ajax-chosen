@@ -12,7 +12,7 @@ do ($ = jQuery) ->
     chosenXhr = null
     
     # Merge options with defaults
-    options = $.extend {}, defaultOptions, settings
+    options = $.extend {}, defaultOptions, $(select).data(), settings
 
     # Load chosen. To make things clear, I have taken the liberty
     # of using the .chzn-autoselect class to specify input elements
