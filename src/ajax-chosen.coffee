@@ -104,10 +104,10 @@ do ($ = jQuery) ->
                       .attr('value', value)
                       .html(text)
                       .appendTo(group)
-              else if $.inArray(value + "-" + element, selected_values) == -1
+              else if $.inArray(element.value + "-" + element.text, selected_values) == -1
                 $("<option />")
-                  .attr('value', value)
-                  .html(element)
+                  .attr('value', element.value)
+                  .html(element.text)
                   .appendTo(select)
                 
             # Tell chosen that the contents of the <select> input have been updated
