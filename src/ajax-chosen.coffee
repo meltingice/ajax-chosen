@@ -93,12 +93,12 @@ do ($ = jQuery) ->
             
             # Iterate through the given data and inject the <option> elements into
             # the DOM if it doesn't exist in the selector already
-            $.each items, (value, element) ->
+            $.each items, (i, element) ->
               if element.group
                 group = $("<optgroup />")
                   .attr('label', element.text)
                   .appendTo(select)
-                $.each element.items, (value, element) ->
+                $.each element.items, (i, element) ->
                   if $.inArray(element.value + "-" + element.text, selected_values) == -1
                     $("<option />")
                       .attr('value', element.value)
