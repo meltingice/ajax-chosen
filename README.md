@@ -8,9 +8,9 @@ This script bootstraps the existing Chosen plugin without making any modificatio
 
 This plugin exposes a new jQuery function named `ajaxChosen` that we call on a `select` element. The first argument consists of the options passed to the jQuery $.ajax function. The `data` parameter is optional, and the `success` callback is also optional.
 
-The second argument is a callback that tells the plugin what HTML `option` elements to make. It is passed the data returned from the ajax call, and you have to return an object where the keys are the HTML `option` elements' `value` attributes, and the values are the text to display for each option. In other words:
+The second argument is a callback that tells the plugin what HTML `option` elements to make. It is passed the data returned from the ajax call, and you have to return an array of objects for which each item has a `value` property corresponding to the HTML `option` elements' `value` attribute, and a `text` property corresponding to the text to display for each option. In other words:
 
-	{"3": "Ohio"}
+	[{"value": 3, "text": "Ohio"}]
 
 becomes:
 
@@ -18,20 +18,32 @@ becomes:
 
 or for grouping:
 
-	{"3": {
+	[{
 		group: true,
-		text: "City",
-		items: {
-			"10": "Stockholm",
-			"23": "Moskow"
-		}
-	}
+		text: "Europe",
+		items: [
+			{ "value": "10", "text": "Stockholm" },
+			{ "value": "23", "text": "London" }
+		]
+	},
+	{
+		group: true,
+		text: "Asia",
+		items: [
+			{ "value": "36", "text": "Beijing" },
+			{ "value": "20", "text": "Tokyo" }
+		]
+	}]
 
 becomes:
 
-        <optgroup label="City">
+        <optgroup label="Europe">
             <option value="10">Stockholm</option>
-            <option value="23">Moskow</option>
+            <option value="23">London</option>
+        </optgroup>
+        <optgroup label="City">
+            <option value="36">Beijing</option>
+            <option value="20">Tokyo</option>
         </optgroup>
 
 Note: 
@@ -64,10 +76,10 @@ $("#example-input").ajaxChosen({
 	url: '/ajax-chosen/data.php',
 	dataType: 'json'
 }, function (data) {
-	var results = {};
+	var results = [];
 	
 	$.each(data, function (i, val) {
-		results[i] = val;
+		results.push({ value: val.value, text: val.text });
 	});
 	
 	return results;
@@ -81,17 +93,22 @@ $("#example-input").ajaxChosen({
 	url: '/ajax-chosen/grouped.php',
 	dataType: 'json'
 }, function (data) {
-	var results = {};
+	var results = [];
+
 	$.each(data, function (i, val) {
-		results[i] = { // here's a group object:
+		var group = { // here's a group object:
 			group: true,
 			text: val.name, // label for the group
-			items: {} // individual options within the group
+			items: [] // individual options within the group
 		};
-		$.each(val.Values, function (i1, val1) {
-			results[i].items[val1.Id] = val1.name;
+
+		$.each(val.items, function (i1, val1) {
+			group.items.push({value: val1.value, text: val1.text});
 		});
+
+		results.push(group);
 	});
+
 	return results;
 });
 
