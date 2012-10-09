@@ -41,7 +41,7 @@ becomes:
             <option value="10">Stockholm</option>
             <option value="23">London</option>
         </optgroup>
-        <optgroup label="City">
+        <optgroup label="Asia">
             <option value="36">Beijing</option>
             <option value="20">Tokyo</option>
         </optgroup>
