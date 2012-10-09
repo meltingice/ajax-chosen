@@ -99,16 +99,29 @@ do ($ = jQuery) ->
                   .attr('label', element.text)
                   .appendTo(select)
                 $.each element.items, (i, element) ->
-                  if $.inArray(element.value + "-" + element.text, selected_values) == -1
+                  if typeof element == "string"
+                    value = i;
+                    text = element;
+                  else
+                    value = element.value;
+                    text = element.text;
+                  if $.inArray(value + "-" + text, selected_values) == -1
                     $("<option />")
-                      .attr('value', element.value)
-                      .html(element.text)
+                      .attr('value', value)
+                      .html(text)
                       .appendTo(group)
-              else if $.inArray(element.value + "-" + element.text, selected_values) == -1
-                $("<option />")
-                  .attr('value', element.value)
-                  .html(element.text)
-                  .appendTo(select)
+              else
+                if typeof element == "string"
+                  value = i;
+                  text = element;
+                else
+                  value = element.value;
+                  text = element.text;
+                if $.inArray(value + "-" + text, selected_values) == -1
+                  $("<option />")
+                    .attr('value', value)
+                    .html(text)
+                    .appendTo(select)
                 
             # Tell chosen that the contents of the <select> input have been updated
             # This makes chosen update its internal list of the input data.
