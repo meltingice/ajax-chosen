@@ -70,7 +70,7 @@ do ($ = jQuery) ->
           
           # Create our own callback that will be executed when the ajax call is
           # finished.
-          options.success = (data) ->
+          options.success = (data, val) ->
             # Exit if the data we're given is invalid
             return if not data?
             
