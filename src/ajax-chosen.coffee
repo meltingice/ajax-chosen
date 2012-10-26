@@ -70,7 +70,7 @@ do ($ = jQuery) ->
           
           # Create our own callback that will be executed when the ajax call is
           # finished.
-          options.success = (data, val) ->
+          options.success = (data) ->
             # Exit if the data we're given is invalid
             return if not data?
             
@@ -89,7 +89,7 @@ do ($ = jQuery) ->
                 
             # Send the ajax results to the user callback so we can get an object of
             # value => text pairs to inject as <option> elements.
-            items = callback data
+            items = callback data, val
             
             # Iterate through the given data and inject the <option> elements into
             # the DOM if it doesn't exist in the selector already
