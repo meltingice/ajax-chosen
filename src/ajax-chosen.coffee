@@ -112,9 +112,14 @@ do ($ = jQuery) ->
                   .html(element)
                   .appendTo(select)
                 
-            # Tell chosen that the contents of the <select> input have been updated
-            # This makes chosen update its internal list of the input data.
-            select.trigger("liszt:updated")
+            if Object.keys(items).length
+              # Tell chosen that the contents of the <select> input have been updated
+              # This makes chosen update its internal list of the input data.
+              select.trigger("liszt:updated")
+            else
+              # If there are no results, display the no_results text
+              select.data().chosen.no_results_clear()
+              select.data().chosen.no_results field.attr('value')
             
             # Finally, call the user supplied callback (if it exists)
             success(data) if success?
