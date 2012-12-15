@@ -36,7 +36,7 @@ do ($ = jQuery) ->
 
           # Depending on how much text the user has typed, let them know
           # if they need to keep typing or if we are looking for their data
-          msg = if val.length < options.minTermLength then options.keepTypingMsg else options.lookingForMsg + " '" + val + "'"
+          msg = if val.length < options.minTermLength then options.keepTypingMsg else options.lookingForMsg + " '#{val}'"
           select.next('.chzn-container').find('.no-results').text(msg)
           
           # If input text has not changed ... do nothing
