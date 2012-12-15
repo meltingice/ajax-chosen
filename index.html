@@ -3,11 +3,11 @@
 <head>
 	<title>Ajax-Chosen: Bootstrapping a Popular jQuery Plugin to add Ajax Autocomplete</title>
 	
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script type="text/javascript" src="/ajax-chosen/dist/chosen/chosen/chosen.jquery.min.js"></script>
-	<script type="text/javascript" src="/ajax-chosen/lib/ajax-chosen.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script type="text/javascript" src="/dist/chosen/chosen/chosen.jquery.min.js"></script>
+	<script type="text/javascript" src="/lib/ajax-chosen.js"></script>
 	
-	<link type="text/css" rel="stylesheet" href="/ajax-chosen/dist/chosen/chosen/chosen.css" />
+	<link type="text/css" rel="stylesheet" href="/dist/chosen/chosen/chosen.css" />
 	
 	<style type="text/css">
 	#example1, #example2, #example3 { width: 300px; display: block; }
@@ -17,12 +17,12 @@
 	$(document).ready(function () {
 		$("#example1,#example2,#example3").ajaxChosen({
 			type: 'GET',
-			url: '/ajax-chosen/data.php',
+			url: '/data.json',
 			dataType: 'json'
 		}, function (data) {
 			var terms = {};
 			
-			$.each(data, function (i, val) {
+			$.each(data.states, function (i, val) {
 				terms[i] = val;
 			});
 			
