@@ -4,7 +4,9 @@ do ($ = jQuery) ->
     defaultOptions =
       minTermLength: 3
       afterTypeDelay: 500
-      jsonTermKey: "term"
+      jsonTermKey: "term",
+      keepTypingString: "Keep typing...",
+      lookingForString: "Looking for "
 
     # This will come in handy later.
     select = @
@@ -34,7 +36,7 @@ do ($ = jQuery) ->
 
           # Depending on how much text the user has typed, let them know
           # if they need to keep typing or if we are looking for their data
-          msg = if val.length < options.minTermLength then "Keep typing..." else "Looking for '" + val + "'"
+          msg = if val.length < options.minTermLength then options.keepTypingString else options.lookingForString + "'" + val + "'"
           select.next('.chzn-container').find('.no-results').text(msg)
           
           # If input text has not changed ... do nothing
