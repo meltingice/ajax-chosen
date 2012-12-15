@@ -78,14 +78,14 @@ do ($ = jQuery) ->
             # ones that have not been selected by the user.  For those selected
             # by the user, add them to a list to filter from the results later.
             selected_values = []
-            select.find('optgroup').each -> 
-                $(@).remove() 
-
             select.find('option').each -> 
               if not $(@).is(":selected")
-                $(@).remove() 
+                $(@).remove()
               else
                 selected_values.push $(@).val() + "-" + $(@).text()
+            select.find('optgroup:empty').each ->
+              $(@).remove()
+
                 
             # Send the ajax results to the user callback so we can get an object of
             # value => text pairs to inject as <option> elements.
@@ -95,8 +95,10 @@ do ($ = jQuery) ->
             # the DOM if it doesn't exist in the selector already
             $.each items, (value, element) ->
               if element.group
-                group = $("<optgroup />")
-                  .attr('label', element.text)
+                group = select.find("optgroup[label='#{element.text}']")
+                group = $("<optgroup />") unless group.size()
+
+                group.attr('label', element.text)
                   .appendTo(select)
                 $.each element.items, (value, text) ->
                   if $.inArray(value + "-" + text, selected_values) == -1
