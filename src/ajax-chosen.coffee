@@ -93,9 +93,14 @@ do ($ = jQuery) ->
             # value => text pairs to inject as <option> elements.
             items = callback data
             
+
+            nbItems = 0
+
             # Iterate through the given data and inject the <option> elements into
             # the DOM if it doesn't exist in the selector already
             $.each items, (i, element) ->
+              nbItems++
+
               if element.group
                 group = select.find("optgroup[label='#{element.text}']")
                 group = $("<optgroup />") unless group.size()
@@ -126,8 +131,8 @@ do ($ = jQuery) ->
                     .attr('value', value)
                     .html(text)
                     .appendTo(select)
-                
-            if Object.keys(items).length
+
+            if nbItems
               # Tell chosen that the contents of the <select> input have been updated
               # This makes chosen update its internal list of the input data.
               select.trigger("liszt:updated")
