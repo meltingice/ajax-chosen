@@ -62,17 +62,19 @@ do ($ = jQuery) ->
           field = $(@)
           
           # Default term key is `term`.  Specify alternative in options.options.jsonTermKey
-          options.data = {} if not options.data?
-          options.data[options.jsonTermKey] = val
-          options.data = options.dataCallback(options.data) if options.dataCallback? 
+          # Create a copy of options so options.success doesn't get overwritten
+          ajaxOptions = $.extend({}, options)
+          ajaxOptions.data = {} if not ajaxOptions.data?
+          ajaxOptions.data[options.jsonTermKey] = val
+          ajaxOptions.data = ajaxOptions.dataCallback(ajaxOptions.data) if ajaxOptions.dataCallback? 
           
           # If the user provided an ajax success callback, store it so we can
           # call it after our bootstrapping is finished.
-          success = options.success
+          success = ajaxOptions.success
           
           # Create our own callback that will be executed when the ajax call is
           # finished.
-          options.success = (data) ->
+          ajaxOptions.success = (data) ->
             # Exit if the data we're given is invalid
             return if not data?
             
@@ -165,5 +167,5 @@ do ($ = jQuery) ->
           # Execute the ajax call to search for autocomplete data with a timer
           @timer = setTimeout -> 
             chosenXhr.abort() if chosenXhr
-            chosenXhr = $.ajax(options)
+            chosenXhr = $.ajax(ajaxOptions)
           , options.afterTypeDelay
