@@ -26,12 +26,19 @@ do ($ = jQuery) ->
       # our ajax autocomplete code.
       $(@).next('.chzn-container')
         .find(".search-field > input, .chzn-search > input")
+        .bind 'keydown', ->
+          field = $(@)
+          # The value is not immediately updated on keydown, so wait a couple milliseconds
+          # before looking it up
+          setTimeout ->
+            field.data('untrimmed_val', field.attr('value'))
+          , 1
         .bind 'keyup', ->
           # This code will be executed every time the user types a letter
           # into the input form that chosen has created
           
           # Retrieve the current value of the input form
-          untrimmed_val = $(@).attr('value')
+          
           val = $.trim $(@).attr('value')
 
           # Depending on how much text the user has typed, let them know
@@ -150,7 +157,7 @@ do ($ = jQuery) ->
             # call trigger above. Often, this can be very annoying (and can make some
             # searches impossible), so we add the value the user was typing back into
             # the input field.
-            field.attr('value', untrimmed_val)
+            field.attr('value', field.data('untrimmed_val'))
 
             # Because non-ajax Chosen isn't constantly re-building results, when it
             # DOES rebuild results (during liszt:updated above, it clears the input 
