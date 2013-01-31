@@ -98,7 +98,7 @@ $("#example-input").ajaxChosen({
 	$.each(data, function (i, val) {
 		var group = { // here's a group object:
 			group: true,
-			text: val.name, // label for the group
+			text: val.text, // label for the group
 			items: [] // individual options within the group
 		};
 
