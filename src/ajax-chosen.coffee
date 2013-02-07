@@ -75,6 +75,9 @@ do ($ = jQuery) ->
           options.success = (data) ->
             # Exit if the data we're given is invalid
             return if not data?
+
+            # Grab the current field value
+            currentVal = field.attr('value')
             
             # Go through all of the <option> elements in the <select> and remove
             # ones that have not been selected by the user.  For those selected
@@ -148,7 +151,7 @@ do ($ = jQuery) ->
             # call trigger above. Often, this can be very annoying (and can make some
             # searches impossible), so we add the value the user was typing back into
             # the input field.
-            field.val(untrimmed_val)
+            field.attr('value', currentVal)
 
             # Because non-ajax Chosen isn't constantly re-building results, when it
             # DOES rebuild results (during liszt:updated above, it clears the input 
