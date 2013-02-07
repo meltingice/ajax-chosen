@@ -31,8 +31,8 @@ do ($ = jQuery) ->
           # into the input form that chosen has created
           
           # Retrieve the current value of the input form
-          untrimmed_val = $(@).attr('value')
-          val = $.trim $(@).attr('value')
+          untrimmed_val = $(@).val()
+          val = $.trim $(@).val()
 
           # Depending on how much text the user has typed, let them know
           # if they need to keep typing or if we are looking for their data
@@ -139,8 +139,8 @@ do ($ = jQuery) ->
             else
               # If there are no results, display the no_results text
               select.data().chosen.no_results_clear()
-              select.data().chosen.no_results field.attr('value')
-            
+              select.data().chosen.no_results field.val()
+
             # Finally, call the user supplied callback (if it exists)
             success(data) if success?
 
@@ -148,7 +148,7 @@ do ($ = jQuery) ->
             # call trigger above. Often, this can be very annoying (and can make some
             # searches impossible), so we add the value the user was typing back into
             # the input field.
-            field.attr('value', untrimmed_val)
+            field.val(untrimmed_val)
 
             # Because non-ajax Chosen isn't constantly re-building results, when it
             # DOES rebuild results (during liszt:updated above, it clears the input 
