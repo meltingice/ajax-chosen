@@ -91,7 +91,7 @@ do ($ = jQuery) ->
 
             # Send the ajax results to the user callback so we can get an object of
             # value => text pairs to inject as <option> elements.
-            items = if callback? then callback(data) else data
+            items = if callback? then callback(data, field) else data
 
 
             nbItems = 0
