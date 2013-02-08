@@ -142,7 +142,7 @@ do ($ = jQuery) ->
               select.data().chosen.no_results field.val()
 
             # Finally, call the user supplied callback (if it exists)
-            success(data) if success?
+            settings.success(data) if settings.success?
 
             # For some reason, the contents of the input field get removed once you
             # call trigger above. Often, this can be very annoying (and can make some
