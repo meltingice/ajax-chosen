@@ -62,7 +62,7 @@ do ($ = jQuery) ->
           field = $(@)
 
           # Default term key is `term`.  Specify alternative in options.options.jsonTermKey
-          options.data = {} if not options.data?
+          options.data = {} unless options.data?
           options.data[options.jsonTermKey] = val
           options.data = options.dataCallback(options.data) if options.dataCallback?
 
@@ -74,14 +74,14 @@ do ($ = jQuery) ->
           # finished.
           options.success = (data) ->
             # Exit if the data we're given is invalid
-            return if not data?
+            return unless data?
 
             # Go through all of the <option> elements in the <select> and remove
             # ones that have not been selected by the user.  For those selected
             # by the user, add them to a list to filter from the results later.
             selected_values = []
             select.find('option').each ->
-              if not $(@).is(":selected")
+              if $(@).not(":selected")
                 $(@).remove()
               else
                 selected_values.push $(@).val() + "-" + $(@).text()
