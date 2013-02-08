@@ -81,7 +81,7 @@ do ($ = jQuery) ->
             # by the user, add them to a list to filter from the results later.
             selected_values = []
             select.find('option').each ->
-              if $(@).not(":selected")
+              if not $(@).is(":selected")
                 $(@).remove()
               else
                 selected_values.push $(@).val() + "-" + $(@).text()
