@@ -150,6 +150,11 @@ do ($ = jQuery) ->
             # the input field.
             field.val(untrimmed_val)
 
+            # Make sure matching string in option text will be wrapped by "<em>"
+            # since "liszt:updated" will call "results_update_field" -> "results_build" -> "show_search_field_default", search_field.value will be cleared
+            # so trigger 'keyup' to call "results_search" -> "winnow_results" to highlight search result
+            field.trigger("keyup")
+
             # Because non-ajax Chosen isn't constantly re-building results, when it
             # DOES rebuild results (during liszt:updated above, it clears the input
             # search field before scaling it.  This causes the input field width to be
