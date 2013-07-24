@@ -24,16 +24,12 @@ do ($ = jQuery) ->
       # we want to use with ajax autocomplete.
       @element.chosen(if chosenOptions then chosenOptions else {})
 
+      # Now that chosen is loaded normally, we can bootstrap it with
+      # our ajax autocomplete code.
       @search_field = @element.next('.chzn-container')
         .find(".search-field > input, .chzn-search > input")
 
       @register_observers()
-
-      # Now that chosen is loaded normally, we can bootstrap it with
-      # our ajax autocomplete code.
-      # @element.next('.chzn-container')
-      #   .find(".search-field > input, .chzn-search > input")
-      #   .bind 'keyup', @updateList
 
     register_observers: ->
       @search_field.keyup (evt) => @update_list(evt); return
