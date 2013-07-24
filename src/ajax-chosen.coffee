@@ -33,6 +33,10 @@ do ($ = jQuery) ->
 
     register_observers: ->
       @search_field.keyup (evt) => @update_list(evt); return
+      @search_field.focus (evt) => @search_field_focused(evt); return
+
+    search_field_focused: (evt) ->
+      return @update_list(evt) if @options.minTermLength == 0 and @search_field.val().length == 0
 
     update_list: (evt) ->
       # This code will be executed every time the user types a letter
