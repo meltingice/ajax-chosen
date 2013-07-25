@@ -65,9 +65,7 @@ do ($ = jQuery) ->
       # server with ajax requests.
       clearTimeout(@timer) if @timer
 
-      # Some simple validation so we don't make excess ajax calls. I am
-      # assuming you don't want to perform a search with less than 3
-      # characters.
+      # Do not make ajax calls if search value length is lower than the minimum term length
       return false if val.length < @options.minTermLength
 
       # Default term key is `term`.  Specify alternative in @options.options.jsonTermKey
