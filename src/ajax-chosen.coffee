@@ -71,7 +71,7 @@ do ($ = jQuery) ->
       # Default term key is `term`.  Specify alternative in @options.options.jsonTermKey
       @options.data = {} unless @options.data?
       @options.data[@options.jsonTermKey] = val
-      @options.data = @options.dataCallback(options.data) if @options.dataCallback?
+      @options.data = @options.dataCallback(@options.data) if @options.dataCallback?
 
       _this = @
       options = @options
