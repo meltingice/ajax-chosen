@@ -81,8 +81,8 @@ do ($ = jQuery) ->
 
       # Execute the ajax call to search for autocomplete data with a timer
       @timer = setTimeout ->
-        chosenXhr.abort() if chosenXhr
-        chosenXhr = $.ajax(options)
+        _this.chosenXhr.abort() if _this.chosenXhr
+        _this.chosenXhr = $.ajax(options)
       , options.afterTypeDelay
 
     # Create our own callback that will be executed when the ajax call is
