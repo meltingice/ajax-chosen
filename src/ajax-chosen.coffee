@@ -17,15 +17,15 @@ do ($ = jQuery) ->
     options = $.extend {}, defaultOptions, $(select).data(), settings
 
     # Load chosen. To make things clear, I have taken the liberty
-    # of using the .chzn-autoselect class to specify input elements
+    # of using the .chosen-autoselect class to specify input elements
     # we want to use with ajax autocomplete.
     @chosen(if chosenOptions then chosenOptions else {})
 
     @each ->
       # Now that chosen is loaded normally, we can bootstrap it with
       # our ajax autocomplete code.
-      $(@).next('.chzn-container')
-        .find(".search-field > input, .chzn-search > input")
+      $(@).next('.chosen-container')
+        .find(".search-field > input, .chosen-search > input")
         .bind 'keyup', ->
           # This code will be executed every time the user types a letter
           # into the input form that chosen has created
@@ -37,7 +37,7 @@ do ($ = jQuery) ->
           # Depending on how much text the user has typed, let them know
           # if they need to keep typing or if we are looking for their data
           msg = if val.length < options.minTermLength then options.keepTypingMsg else options.lookingForMsg + " '#{val}'"
-          select.next('.chzn-container').find('.no-results').text(msg)
+          select.next('.chosen-container').find('.no-results').text(msg)
 
           # If input text has not changed ... do nothing
           return false if val is $(@).data('prevVal')
@@ -135,7 +135,7 @@ do ($ = jQuery) ->
             if nbItems
               # Tell chosen that the contents of the <select> input have been updated
               # This makes chosen update its internal list of the input data.
-              select.trigger("liszt:updated")
+              select.trigger("chosen:updated")
             else
               # If there are no results, display the no_results text
               select.data().chosen.no_results_clear()
@@ -151,7 +151,7 @@ do ($ = jQuery) ->
             field.val(untrimmed_val)
 
             # Because non-ajax Chosen isn't constantly re-building results, when it
-            # DOES rebuild results (during liszt:updated above, it clears the input
+            # DOES rebuild results (during chosen:updated above, it clears the input
             # search field before scaling it.  This causes the input field width to be
             # at it's minimum, which is about 25px.
 
