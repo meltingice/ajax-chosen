@@ -1,0 +1,23 @@
+{
+  "name": "ajax-chosen",
+  "version": "1.0.0",
+  "homepage": "https://github.com/p34eu/ajax-chosen",
+  "authors": [
+    "Ryan LeFevre",
+    "Michaël Perrin"
+  ],
+  "description": "A complement to the jQuery library Chosen that adds ajax autocomplete. Fork with additional options",
+  "main": "./lib/ajax-chosen.min.js",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": ">= 1.9.0",
+    "chosen": ">= 1.4.2"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
