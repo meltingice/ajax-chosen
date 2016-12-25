@@ -1,0 +1,12 @@
+{
+  "name": "ajax-chosen",
+  "version": "0.2.0",
+  "main": "index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
