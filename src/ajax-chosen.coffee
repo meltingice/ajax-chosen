@@ -24,8 +24,8 @@ do ($ = jQuery) ->
     @each ->
       # Now that chosen is loaded normally, we can bootstrap it with
       # our ajax autocomplete code.
-      $(@).next('.chzn-container')
-        .find(".search-field > input, .chzn-search > input")
+      $(@).next('.chzn-container,.chosen-container')
+        .find(".search-field > input, .chzn-search > input,.chosen-search > input")
         .bind 'keyup', ->
           # This code will be executed every time the user types a letter
           # into the input form that chosen has created
@@ -135,7 +135,8 @@ do ($ = jQuery) ->
             if nbItems
               # Tell chosen that the contents of the <select> input have been updated
               # This makes chosen update its internal list of the input data.
-              select.trigger("liszt:updated")
+              # select.trigger("liszt:updated")
+              select.trigger("chosen:updated")
             else
               # If there are no results, display the no_results text
               select.data().chosen.no_results_clear()
