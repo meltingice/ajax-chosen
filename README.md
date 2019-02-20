@@ -48,20 +48,6 @@ becomes:
             <option value="20">Tokyo</option>
         </optgroup>
 
-Note: 
-
-Due to a bug in Chosen, it is necessary to change `choosen.css`.
-
-Add 
-
-	display: list-item;
-
-to 
-
-	.chzn-container .chzn-results .group-result {
-
-class
-
 ### Options
 
 There are some additional ajax-chosen specific options you can pass into the first argument to control its behavior.
@@ -113,6 +99,8 @@ $("#example-input").ajaxChosen({
 
 	return results;
 });
+
+Note: Make sure that the given URL returns JSON objects, otherwise function may not be called. You can use the options from $.ajax
 
 ```
 
