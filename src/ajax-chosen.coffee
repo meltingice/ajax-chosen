@@ -26,6 +26,13 @@ do ($ = jQuery) ->
       # our ajax autocomplete code.
       $(@).next('.chzn-container')
         .find(".search-field > input, .chzn-search > input")
+
+        .bind 'paste', ->
+          ajax_chosen = $(this)
+          paste_callback = ->
+            ajax_chosen.trigger('keyup')
+          setTimeout(paste_callback, 50)
+
         .bind 'keyup', ->
           # This code will be executed every time the user types a letter
           # into the input form that chosen has created
