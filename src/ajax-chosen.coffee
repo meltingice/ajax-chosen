@@ -84,7 +84,7 @@ do ($ = jQuery) ->
               if not $(@).is(":selected")
                 $(@).remove()
               else
-                selected_values.push $(@).val() + "-" + $(@).text()
+                selected_values.push $(@).val()
             select.find('optgroup:empty').each ->
               $(@).remove()
 
@@ -114,7 +114,7 @@ do ($ = jQuery) ->
                   else
                     value = element.value;
                     text = element.text;
-                  if $.inArray(value + "-" + text, selected_values) == -1
+                  if $.inArray(value, selected_values) == -1
                     $("<option />")
                       .attr('value', value)
                       .html(text)
@@ -126,7 +126,7 @@ do ($ = jQuery) ->
                 else
                   value = element.value;
                   text = element.text;
-                if $.inArray(value + "-" + text, selected_values) == -1
+                if $.inArray(value, selected_values) == -1
                   $("<option />")
                     .attr('value', value)
                     .html(text)
