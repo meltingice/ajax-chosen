@@ -40,7 +40,7 @@ do ($ = jQuery) ->
           select.next('.chzn-container').find('.no-results').text(msg)
 
           # If input text has not changed ... do nothing
-          return false if val is $(@).data('prevVal')
+          return false if untrimmed_val is $(@).data('prevVal')
 
           # Set the current search term so we don't execute the ajax call if
           # the user hits a key that isn't an input letter/number/symbol
