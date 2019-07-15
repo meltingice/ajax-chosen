@@ -149,6 +149,7 @@ do ($ = jQuery) ->
             # searches impossible), so we add the value the user was typing back into
             # the input field.
             field.val(untrimmed_val)
+            field.data('ajaxChosenValue', untrimmed_val)
 
             # Because non-ajax Chosen isn't constantly re-building results, when it
             # DOES rebuild results (during liszt:updated above, it clears the input
@@ -167,3 +168,6 @@ do ($ = jQuery) ->
             chosenXhr.abort() if chosenXhr
             chosenXhr = $.ajax(options)
           , options.afterTypeDelay
+        .bind 'ajaxStop', (data) -> 
+          $field = $(data.currentTarget)
+          $field.val($field.data('ajaxChosenValue'))
