@@ -1,0 +1,39 @@
+{
+  "name": "ajax-chosen",
+  "description": "",
+  "version": "0.2.0",
+  "main": [
+    "lib/ajax-chosen.js"
+  ],
+  "license": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/harvesthq/chosen/blob/master/LICENSE.md"
+    }
+  ],
+  "ignore": [],
+  "keywords": [
+    "select",
+    "multiselect",
+    "dropdown",
+    "form",
+    "input",
+    "ui"
+  ],
+  "authors": [
+    {
+      "name": "Ryan LeFevre",
+      "url": "https://github.com/meltingice"
+    }
+  ],
+  "homepage": "http://dev.meltingice.net/ajax-chosen",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meltingice/ajax-chosen"
+  },
+  "dependencies": {
+    "jquery": ">=1.4.4",
+    "chosen": ">=1.4.2"
+  },
+  "devDependencies": []
+}
